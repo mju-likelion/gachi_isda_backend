@@ -1,10 +1,12 @@
 import { Router } from "express";
-import post from "./post";
-import dictionary from "./dictionary";
+import korail from "./korail";
+import words from "./words";
+import DBstore from "./DBstore";
 
 const api = Router();
 
-api.use("/post", post); //korai톡
-api.use("/dictionary", dictionary); //외래어 사전
+api.use("/DBstore", DBstore); //API=>DB 저장,,?
+api.use("/korail", korail); //korai톡
+api.use("/words", words); //외래어 사전
 
 export default api;
