@@ -4,7 +4,7 @@ import { dictionaryData } from "../../models";
 
 const router = Router();
 
-var options = {
+let options = {
   method: "GET",
   url: "https://plainkorean.kr/api.jsp?keyword",
   headers: {
