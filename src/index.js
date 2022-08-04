@@ -2,7 +2,7 @@ import express from "express";
 import api from "./api";
 
 const app = express();
-const port = 3300;
+const port = 3000;
 const { sequelize } = require("../models");
 
 sequelize

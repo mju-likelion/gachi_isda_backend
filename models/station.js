@@ -1,16 +1,17 @@
 const Sequelize = require("sequelize");
 
-module.exports = class KorailData extends Sequelize.Model {
+module.exports = class station extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        //스키마 정해지먄 추가하기
+        station_id: { type: Sequelize.STRING(50) },
+        station_name: { type: Sequelize.STRING(50) },
       },
       {
         sequelize,
         timestamps: false,
-        modelName: "KorailData",
-        tableName: "KorailDatas",
+        modelName: "station",
+        tableName: "stations",
         paranoid: false,
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci",
