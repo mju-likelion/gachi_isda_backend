@@ -1,10 +1,8 @@
-import { Router } from "express";
-import post from "./post";
-import dictionary from "./dictionary";
+import { Router } from 'express';
+import korail from './router/korail.js';
 
 const api = Router();
 
-api.use("/post", post); //korai톡
-api.use("/dictionary", dictionary); //외래어 사전
+api.use('/korail', korail); //korail
 
 export default api;
