@@ -6,6 +6,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 const app = express();
 const port = 3300;
+
 // const { sequelize } = require("../models");
 // sequelize
 //   .sync({ force: true })
