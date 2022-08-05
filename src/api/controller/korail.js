@@ -1,11 +1,11 @@
-import * as korailRepository from '../db/korail.js';
-import axios from 'axios';
+import * as korailRepository from "../db/korail.js";
+import axios from "axios";
 
 //추후 .env로
 const addr =
-  'http://apis.data.go.kr/1613000/TrainInfoService/getStrtpntAlocFndTrainInfo';
+  "http://apis.data.go.kr/1613000/TrainInfoService/getStrtpntAlocFndTrainInfo";
 const key =
-  'OJnr70EELGdU7KhcHXbaxTFuw1QEc8G2PkRahfzpu3KurXUT9P9PrbX640NSBMWd6weDfbblmWRaujlyXsh5jg==';
+  "e9q6FRryTM2vX8VQxrb8dJwbnlvpvHu447HuwfJQw0zl%2B7cnoIu6HdJElNMaGpaKQ3sQ2GAEsOad%2BOWNCwJ%2FVg%3D%3D";
 
 export async function getStations(req, res) {
   const data = await korailRepository.getStations();
@@ -39,7 +39,7 @@ export async function getCompById(req, res) {
 export async function createTicket(req, res) {
   const { trainNo, compId, seats } = req.body;
   const data = await korailRepository.createTicket(trainNo, compId, seats);
-  return res.cookie('sessionId', data.sessionId).status(200).json({ data });
+  return res.cookie("sessionId", data.sessionId).status(200).json({ data });
 }
 
 export async function getTicket(req, res) {

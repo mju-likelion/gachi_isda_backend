@@ -2,46 +2,46 @@
 
 let stations = [
   {
-    stationId: 'NAT010000',
-    stationName: '서울',
+    stationId: "NAT010000",
+    stationName: "서울",
   },
   {
-    stationId: 'NAT010032',
-    stationName: '용산',
+    stationId: "NAT010032",
+    stationName: "용산",
   },
 ];
 
 let trains = [
   {
     trainNo: 13,
-    trainGradeName: 'KTX',
-    depPlandTime: '20220731090200',
-    arrPlandTime: '20220731080000',
-    depPlaceName: '대전',
-    arrPlaceName: '서울',
+    trainGradeName: "KTX",
+    depPlandTime: "20220731090200",
+    arrPlandTime: "20220731080000",
+    depPlaceName: "대전",
+    arrPlaceName: "서울",
   },
   {
     trainNo: 121,
-    trainGradeName: '무궁화호',
-    depPlandTime: '20220731095500',
-    arrPlandTime: '20220731081400',
-    depPlaceName: '대전',
-    arrPlaceName: '서울',
+    trainGradeName: "무궁화호",
+    depPlandTime: "20220731095500",
+    arrPlandTime: "20220731081400",
+    depPlaceName: "대전",
+    arrPlaceName: "서울",
   },
 ];
 
 let comps = [
-  { compId: 1, compName: '1호차', compType: 'economy', trainNo: 13 },
-  { compId: 2, compName: '1호차', compType: 'economy', trainNo: 13 },
+  { compId: 1, compName: "1호차", compType: "economy", trainNo: 13 },
+  { compId: 2, compName: "1호차", compType: "economy", trainNo: 13 },
 ];
 
 let seats = [
-  { seatId: 1, seatName: '1A', isBooked: false, compId: 1 },
-  { seatId: 2, seatName: '2A', isBooked: false, compId: 1 },
-  { seatId: 3, seatName: '3A', isBooked: false, compId: 1 },
-  { seatId: 1, seatName: '4A', isBooked: false, compId: 2 },
-  { seatId: 2, seatName: '5A', isBooked: false, compId: 2 },
-  { seatId: 3, seatName: '6A', isBooked: false, compId: 2 },
+  { seatId: 1, seatName: "1A", isBooked: false, compId: 1 },
+  { seatId: 2, seatName: "2A", isBooked: false, compId: 1 },
+  { seatId: 3, seatName: "3A", isBooked: false, compId: 1 },
+  { seatId: 1, seatName: "4A", isBooked: false, compId: 2 },
+  { seatId: 2, seatName: "5A", isBooked: false, compId: 2 },
+  { seatId: 3, seatName: "6A", isBooked: false, compId: 2 },
 ];
 
 let tickets = [];

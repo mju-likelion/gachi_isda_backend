@@ -73,7 +73,7 @@ module.exports = {
         time: 23,
       },
       {
-        time: 24,
+        time: 25,
       },
     ]);
   },
