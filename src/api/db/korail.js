@@ -1,4 +1,5 @@
 //TEMPORARY DATAS
+import { add, getDay, format } from "date-fns";
 
 let stations = [
   {
@@ -54,8 +55,52 @@ export async function getStationById(stationId) {
   return stations.find((station) => station.stationId === stationId);
 }
 
-export async function getDate() {
-  return new Date();
+export async function getKrDate() {
+  const now = new Date();
+  const utcNow = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const krTimeCalculate = 9 * 60 * 60 * 1000;
+  const kraNow = new Date(utcNow + krTimeCalculate);
+
+  let dayOfWeek = getDay(kraNow); //일요일 : 0, 토요일 : 6)
+  const date = format(kraNow, "yyyyMMdd");
+  const time = format(kraNow, "HHmm");
+  switch (dayOfWeek) {
+    case 0:
+      dayOfWeek = "일요일";
+    case 1:
+      dayOfWeek = "월요일";
+    case 2:
+      dayOfWeek = "화요일";
+    case 3:
+      dayOfWeek = "수요일";
+    case 4:
+      dayOfWeek = "목요일";
+    case 5:
+      dayOfWeek = "금요일";
+    case 6:
+      dayOfWeek = "토요일";
+    default:
+      break;
+  }
+  const day = {
+    currentDate: date,
+    currentTime: time,
+    currentDay: dayOfWeek,
+  };
+  let nextDate = [];
+  for (let i = 0; i < 31; i++) {
+    nextDate[i] = format(
+      add(kraNow, {
+        days: 1 + i,
+      }),
+      "yyyyMMdd"
+    );
+  }
+  let timeTable = [];
+  for (let i = 0; i < 24; i++) {
+    timeTable[i] = i + "시";
+  }
+  return { day, nextDate, timeTable };
 }
 
 export async function getTrainById(trainNo) {

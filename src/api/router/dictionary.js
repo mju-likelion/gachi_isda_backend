@@ -7,6 +7,6 @@ const router = Router();
 router.get("/words", dictionaryController.getWords);
 
 //GET /searchWord?keyword=:keyword
-router.get("/searchWord", dictionaryController.getWordById);
+router.get("/search-word", dictionaryController.getWordById);
 
 export default router;
