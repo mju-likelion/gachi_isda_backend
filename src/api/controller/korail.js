@@ -18,8 +18,8 @@ export async function getStationById(req, res) {
   return res.status(200).json({ data });
 }
 
-export async function getKrDate(req, res) {
-  const data = await korailRepository.getKrDate();
+export async function getDate(req, res) {
+  const data = await korailRepository.getDate();
   return res.status(200).json({ data });
 }
 

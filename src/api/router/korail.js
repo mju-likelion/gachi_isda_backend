@@ -10,7 +10,7 @@ router.get("/stations", korailController.getStations);
 router.get("/stations/:id", korailController.getStationById);
 
 //GET /date
-router.get("/date", korailController.getKrDate);
+router.get("/date", korailController.getDate);
 
 //GET /trains?depPlaceId=${depPlaceId}&arrPlaceId=${arrPlaceId}&depPlandTime=${depPlandTime}
 router.get("/trains", korailController.getTrains);

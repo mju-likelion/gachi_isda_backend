@@ -55,7 +55,7 @@ export async function getStationById(stationId) {
   return stations.find((station) => station.stationId === stationId);
 }
 
-export async function getKrDate() {
+export async function getDate() {
   const now = new Date();
   const utcNow = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
   const krTimeCalculate = 9 * 60 * 60 * 1000;
