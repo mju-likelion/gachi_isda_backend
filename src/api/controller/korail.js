@@ -6,9 +6,11 @@ const addr =
   "http://apis.data.go.kr/1613000/TrainInfoService/getStrtpntAlocFndTrainInfo";
 const key =
   "e9q6FRryTM2vX8VQxrb8dJwbnlvpvHu447HuwfJQw0zl%2B7cnoIu6HdJElNMaGpaKQ3sQ2GAEsOad%2BOWNCwJ%2FVg%3D%3D";
+const addr2 =
+  "http://apis.data.go.kr/1613000/TrainInfoService/getCtyAcctoTrainSttnList";
 
 export async function getStations(req, res) {
-  const data = await korailRepository.getStations();
+  const data = await korailRepository.getStationById();
   return res.status(200).json({ data });
 }
 
@@ -51,5 +53,9 @@ export async function getTicket(req, res) {
 
 async function getTrainsByAxios(depPlaceId, arrPlaceId, depPlandTime) {
   const url = `${addr}?serviceKey=${key}&depPlaceId=${depPlaceId}&arrPlaceId=${arrPlaceId}&depPlandTime=${depPlandTime}&_type=json&numOfRows=100`;
+  return await axios.get(url).then((res) => res.data.response.body.items.item);
+}
+async function getStationByAxios(cityCode) {
+  const url = `${addr2}?serviceKey=${key}&cityCode=${cityCode}&_type=json&numOfRows=100`;
   return await axios.get(url).then((res) => res.data.response.body.items.item);
 }
