@@ -7,8 +7,8 @@ module.exports = class Train extends Sequelize.Model {
         train_grade_name: { type: Sequelize.STRING(50) },
         dep_pland_time: { type: Sequelize.DATE },
         arr_pland_time: { type: Sequelize.DATE },
-        dep_place_name: { type: Sequelize.DATE },
-        arr_place_name: { type: Sequelize.DATE },
+        dep_place_name: { type: Sequelize.STRING(50) },
+        arr_place_name: { type: Sequelize.STRING(50) },
       },
       {
         sequelize,

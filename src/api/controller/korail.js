@@ -10,7 +10,7 @@ const addr2 =
   "http://apis.data.go.kr/1613000/TrainInfoService/getCtyAcctoTrainSttnList";
 
 export async function getStations(req, res) {
-  const data = await korailRepository.getStationById();
+  const data = await korailRepository.getStations;
   return res.status(200).json({ data });
 }
 
@@ -26,10 +26,10 @@ export async function getDate(req, res) {
 }
 
 export async function getTrains(req, res) {
-  const { depPlaceId, arrPlaceId, depPlandTime, person } = req.query;
-  const trains = await getTrainsByAxios(depPlaceId, arrPlaceId, depPlandTime);
+  //const { depPlaceId, arrPlaceId, depPlandTime, person } = req.query;
+  const data = await korailRepository.getTrains();
 
-  return res.status(200).json({ data: trains });
+  return res.status(200).json({ data: data });
 }
 
 export async function getCompById(req, res) {
@@ -53,9 +53,5 @@ export async function getTicket(req, res) {
 
 async function getTrainsByAxios(depPlaceId, arrPlaceId, depPlandTime) {
   const url = `${addr}?serviceKey=${key}&depPlaceId=${depPlaceId}&arrPlaceId=${arrPlaceId}&depPlandTime=${depPlandTime}&_type=json&numOfRows=100`;
-  return await axios.get(url).then((res) => res.data.response.body.items.item);
-}
-async function getStationByAxios(cityCode) {
-  const url = `${addr2}?serviceKey=${key}&cityCode=${cityCode}&_type=json&numOfRows=100`;
   return await axios.get(url).then((res) => res.data.response.body.items.item);
 }

@@ -1,4 +1,6 @@
 //TEMPORARY DATAS
+import Station from "../../../models/station";
+import Train from "../../../models/train";
 import { add, getDay, format } from "date-fns";
 
 let stations = [
@@ -48,7 +50,21 @@ let seats = [
 let tickets = [];
 
 export async function getStations() {
-  return stations;
+  let station = await Station.create({
+    id: 1,
+    station_name: "서울역",
+  });
+  station = await Station.create({
+    id: 2,
+    station_name: "부산역",
+  });
+  const data = {
+    data: {
+      id: station["id"],
+    },
+  };
+
+  return data;
 }
 
 export async function getStationById(stationId) {
@@ -102,9 +118,38 @@ export async function getDate() {
   }
   return { day, nextDate, timeTable };
 }
-
-export async function getTrainById(trainNo) {
-  return trains.find((train) => train.trainNo === trainNo);
+const timestamps = new Date();
+export async function getTrains() {
+  let trains = await Train.create({
+    id: 1,
+    train_grade_name: "KTX",
+    dep_pland_time: timestamps,
+    arr_pland_time: timestamps,
+    dep_place_name: "서울",
+    arr_place_name: "부산",
+  });
+  trains = await Train.create({
+    id: 2,
+    train_grade_name: "KTX",
+    dep_pland_time: timestamps,
+    arr_pland_time: timestamps,
+    dep_place_name: "서울",
+    arr_place_name: "부산",
+  });
+  trains = await Train.create({
+    id: 3,
+    train_grade_name: "KTX",
+    dep_pland_time: timestamps,
+    arr_pland_time: timestamps,
+    dep_place_name: "서울",
+    arr_place_name: "부산",
+  });
+  const data = {
+    data: {
+      id: trains["id"],
+    },
+  };
+  return data;
 }
 
 export async function createTrain(train) {
