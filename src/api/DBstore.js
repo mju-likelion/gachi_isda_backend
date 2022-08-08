@@ -1,6 +1,6 @@
 import { Router } from "express";
 import request from "request";
-import { dictionaryData } from "../../models";
+import dictionaryData from "../../models/dictionaryData";
 
 const router = Router();
 

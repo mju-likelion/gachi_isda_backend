@@ -1,10 +1,9 @@
 const Sequelize = require('sequelize');
 
-module.exports = class comp extends Sequelize.Model {
+module.exports = class Comp extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        // comp_id: { type: Sequelize.INTEGER, primaryKey: true,},
         comp_name: { type: Sequelize.STRING(50) },
         comp_type: { type: Sequelize.STRING(50) },
         train_id: { type: Sequelize.STRING(10) },
@@ -12,7 +11,7 @@ module.exports = class comp extends Sequelize.Model {
       {
         sequelize,
         timestamps: false,
-        modelName: 'comp',
+        modelName: 'Comp',
         tableName: 'comps',
         paranoid: false,
         charset: 'utf8mb4',
@@ -22,13 +21,13 @@ module.exports = class comp extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.comp.hasMany(db.seat, {
+    db.Comp.hasMany(db.Seat, {
       foriegnKey: { name: 'comp_id', type: Sequelize.INTEGER },
       targetKey: 'id',
     }); //seat의 부모
-    db.comp.belongsTo(db.train, {
+    db.Comp.belongsTo(db.Train, {
       foriegnKey: { name: 'train_id', type: Sequelize.INTEGER },
       targetKey: 'id',
-    });
+    }); //train 자식
   }
 };

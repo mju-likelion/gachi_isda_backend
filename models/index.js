@@ -1,11 +1,9 @@
 const { Sequelize } = require("sequelize");
-const station = require("./station");
-const train = require("./train");
-const comp = require("./comp");
-const seat = require("./seat");
-const timetable = require("./timetable");
-const calendar = require("./calendar");
-const dictionaryData = require("./dictionaryData");
+const Station = require("./station");
+const Train = require("./train");
+const Comp = require("./comp");
+const Seat = require("./seat");
+const DictionaryData = require("./dictionaryData");
 
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
@@ -20,28 +18,22 @@ const sequelize = new Sequelize(
 
 db.sequelize = sequelize;
 
-db.timetable = timetable;
-db.calendar = calendar;
-db.station = station;
-db.train = train;
-db.comp = comp;
-db.seat = seat;
-db.dictionaryData = dictionaryData;
+db.Station = Station;
+db.Train = Train;
+db.Comp = Comp;
+db.Seat = Seat;
+db.DictionaryData = DictionaryData;
 
-timetable.init(sequelize);
-calendar.init(sequelize);
-station.init(sequelize);
-train.init(sequelize);
-comp.init(sequelize);
-seat.init(sequelize);
-dictionaryData.init(sequelize);
+Station.init(sequelize);
+Train.init(sequelize);
+Comp.init(sequelize);
+Seat.init(sequelize);
+DictionaryData.init(sequelize);
 
-timetable.associate(db);
-calendar.associate(db);
-station.associate(db);
-train.associate(db);
-comp.associate(db);
-seat.associate(db);
-dictionaryData.associate(db);
+Station.associate(db);
+Train.associate(db);
+Comp.associate(db);
+Seat.associate(db);
+DictionaryData.associate(db);
 
 module.exports = db;

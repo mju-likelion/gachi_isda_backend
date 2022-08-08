@@ -4,11 +4,11 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+
 const app = express();
 const port = 3300;
 
 const { sequelize } = require('../models');
-
 sequelize
   .sync({ force: false })
   .then(() => {

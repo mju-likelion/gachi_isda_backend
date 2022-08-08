@@ -25,7 +25,8 @@ export async function getStationById(req, res) {
 }
 
 export async function getDate(req, res) {
-  return res.status(200).json({ data: { date: new Date() } });
+  const data = await korailRepository.getDate();
+  return res.status(200).json({ data });
 }
 
 export async function getTrains(req, res) {
@@ -58,18 +59,4 @@ export async function createTicket(req, res) {
     return res.status(400).json({ error: `Cannot create ticket` });
   }
   return res.status(200).json({ data });
-}
-
-// export async function getTicket(req, res) {
-//   const sessionId = req.cookies.sessionId;
-//   // const data = await korailRepository.getTicket(sessionId);
-//   if (!data) {
-//     return res.status(404).json({ error: `Ticket does not exist` });
-//   }
-//   return res.status(200).json({ data });
-// }
-
-async function getTrainsByAxios(depPlaceId, arrPlaceId, depPlandTime) {
-  const url = `${addr}?serviceKey=${key}&depPlaceId=${depPlaceId}&arrPlaceId=${arrPlaceId}&depPlandTime=${depPlandTime}&_type=json&numOfRows=100`;
-  return await axios.get(url).then((res) => res.data.response.body.items.item);
 }
