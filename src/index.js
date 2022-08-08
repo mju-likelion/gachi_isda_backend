@@ -7,15 +7,16 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const port = 3300;
 
-// const { sequelize } = require("../models");
-// sequelize
-//   .sync({ force: true })
-//   .then(() => {
-//     console.log("데이터베이스 연결 성공");
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
+const { sequelize } = require('../models');
+
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log('데이터베이스 연결 성공');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 app.use(morgan('tiny'));
 app.use(helmet());

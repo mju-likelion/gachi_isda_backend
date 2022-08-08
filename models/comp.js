@@ -1,4 +1,4 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 
 module.exports = class comp extends Sequelize.Model {
   static init(sequelize) {
@@ -12,19 +12,23 @@ module.exports = class comp extends Sequelize.Model {
       {
         sequelize,
         timestamps: false,
-        modelName: "comp",
-        tableName: "comps",
+        modelName: 'comp',
+        tableName: 'comps',
         paranoid: false,
-        charset: "utf8mb4",
-        collate: "utf8mb4_general_ci",
+        charset: 'utf8mb4',
+        collate: 'utf8mb4_general_ci',
         underscored: true,
       }
     );
   }
   static associate(db) {
     db.comp.hasMany(db.seat, {
-      foriegnKey: { name: "comp_id", type: Sequelize.INTEGER },
-      targetKey: "id",
+      foriegnKey: { name: 'comp_id', type: Sequelize.INTEGER },
+      targetKey: 'id',
     }); //seat의 부모
+    db.comp.belongsTo(db.train, {
+      foriegnKey: { name: 'train_id', type: Sequelize.INTEGER },
+      targetKey: 'id',
+    });
   }
 };
