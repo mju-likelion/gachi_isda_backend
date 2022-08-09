@@ -1,11 +1,11 @@
-import * as korailRepository from '../db/korail.js';
-import axios from 'axios';
+import * as korailRepository from "../db/korail.js";
+import axios from "axios";
 
 //추후 .env로
 const addr =
-  'http://apis.data.go.kr/1613000/TrainInfoService/getStrtpntAlocFndTrainInfo';
+  "http://apis.data.go.kr/1613000/TrainInfoService/getStrtpntAlocFndTrainInfo";
 const key =
-  'OJnr70EELGdU7KhcHXbaxTFuw1QEc8G2PkRahfzpu3KurXUT9P9PrbX640NSBMWd6weDfbblmWRaujlyXsh5jg==';
+  "OJnr70EELGdU7KhcHXbaxTFuw1QEc8G2PkRahfzpu3KurXUT9P9PrbX640NSBMWd6weDfbblmWRaujlyXsh5jg==";
 
 export async function getStations(req, res) {
   const data = await korailRepository.getStations();
