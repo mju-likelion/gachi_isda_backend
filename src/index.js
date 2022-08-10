@@ -18,9 +18,14 @@ sequelize
     console.log(err);
   });
 
+const corsOptions = {
+  origin: "http://localhost:3000", //허락하고자 하는 요청주소여야 함!
+  credentials: true,
+};
+
 app.use(morgan("tiny"));
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api", api);
