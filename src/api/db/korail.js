@@ -2,7 +2,7 @@ import sequelize from "sequelize";
 import Station from "../../../models/station";
 import Train from "../../../models/train";
 import Seat from "../../../models/seat";
-import { add, getDay, format } from "date-fns";
+import { add, differenceInMinutes, getDay, format } from "date-fns";
 import Comp from "../../../models/comp";
 
 export async function getStations() {
@@ -88,7 +88,23 @@ export async function getCompAndSeatById(trainNo, compId) {
   });
 }
 
-const timestamps = new Date();
+export async function getTrainById(trainNo) {
+  const depPlaceTime = await Train.findByPk(trainNo, {
+    attributes: ["dep_pland_time"],
+  });
+  const arrPlaceTime = await Train.findByPk(trainNo, {
+    attributes: ["arr_pland_time"],
+  });
+  const minuteDiff = differenceInMinutes(
+    arrPlaceTime.dataValues.arr_pland_time,
+    depPlaceTime.dataValues.dep_pland_time
+  );
+  const data = {
+    hourDiff: parseInt(minuteDiff / 60),
+    minuteDiff: minuteDiff % 60,
+  };
+  return data;
+}
 
 export async function getTrains(depPlaceId, arrPlaceId, depPlandTime) {
   const depPlaceName = (await getStationById(depPlaceId)).dataValues
