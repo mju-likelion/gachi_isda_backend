@@ -12,7 +12,7 @@ module.exports = class Comp extends Sequelize.Model {
         sequelize,
         timestamps: false,
         modelName: 'Comp',
-        tableName: 'comps',
+        tableName: 'Comps',
         paranoid: false,
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
