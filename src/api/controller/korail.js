@@ -1,11 +1,4 @@
 import * as korailRepository from '../db/korail.js';
-import axios from 'axios';
-
-//추후 .env로
-const addr =
-  'http://apis.data.go.kr/1613000/TrainInfoService/getStrtpntAlocFndTrainInfo';
-const key =
-  'OJnr70EELGdU7KhcHXbaxTFuw1QEc8G2PkRahfzpu3KurXUT9P9PrbX640NSBMWd6weDfbblmWRaujlyXsh5jg==';
 
 export async function getStations(req, res) {
   const data = await korailRepository.getStations();
@@ -40,6 +33,15 @@ export async function getTrains(req, res) {
     return res.status(404).json({ error: `Train do not exist` });
   }
   return res.status(200).json({ data: trains });
+}
+
+export async function getTrainById(req, res) {
+  const trainNo = req.params.id;
+  const data = await korailRepository.getTrainById(trainNo);
+  if (!data) {
+    return res.status(404).json({ error: `Train do not exist` });
+  }
+  return res.status(200).json({ data });
 }
 
 export async function getCompById(req, res) {

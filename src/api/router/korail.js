@@ -15,6 +15,9 @@ router.get('/date', korailController.getDate);
 //GET /trains?depPlaceId=${depPlaceId}&arrPlaceId=${arrPlaceId}&depPlandTime=${depPlandTime}
 router.get('/trains', korailController.getTrains);
 
+//GET /trains/:id
+router.get('/trains/:id', korailController.getTrainById);
+
 //GET /trains/:trainNo/:compId
 router.get('/trains/:trainNo/:compId', korailController.getCompById);
 

@@ -2,17 +2,10 @@ import sequelize from 'sequelize';
 import Station from '../../../models/station';
 import Train from '../../../models/train';
 import Seat from '../../../models/seat';
-import { add, getDay, format } from 'date-fns';
+import { add, differenceInMinutes, getDay, format } from 'date-fns';
 import Comp from '../../../models/comp';
 
 export async function getStations() {
-  let station = await Station.create({
-    station_name: '서울',
-  });
-  station = await Station.create({
-    station_name: '부산',
-  });
-
   return await Station.findAll();
 }
 
@@ -27,45 +20,59 @@ export async function getDate() {
   const kraNow = new Date(utcNow + krTimeCalculate);
 
   let dayOfWeek = getDay(kraNow); //일요일 : 0, 토요일 : 6)
-  const date = format(kraNow, 'yyyyMMdd');
-  const time = format(kraNow, 'HHmm');
-  switch (dayOfWeek) {
-    case 0:
-      dayOfWeek = '일요일';
-    case 1:
-      dayOfWeek = '월요일';
-    case 2:
-      dayOfWeek = '화요일';
-    case 3:
-      dayOfWeek = '수요일';
-    case 4:
-      dayOfWeek = '목요일';
-    case 5:
-      dayOfWeek = '금요일';
-    case 6:
-      dayOfWeek = '토요일';
-    default:
-      break;
-  }
-  const day = {
-    currentDate: date,
-    currentTime: time,
-    currentDay: dayOfWeek,
-  };
+  const date = format(kraNow, 'yyyy-MM-dd');
+  const time = format(kraNow, 'HH:mm');
+
   let nextDate = [];
+  let nextDay = [];
   for (let i = 0; i < 31; i++) {
-    nextDate[i] = format(
-      add(kraNow, {
-        days: 1 + i,
-      }),
-      'yyyyMMdd'
-    );
+    nextDate[i] = format(add(kraNow, { days: 1 + i }), 'MM-dd');
+    nextDay[i] = getDay(add(kraNow, { days: 1 + i }));
+    switch ((dayOfWeek, nextDay[i])) {
+      case 0:
+        dayOfWeek = '일요일';
+        nextDay[i] = '일';
+        break;
+      case 1:
+        dayOfWeek = '월요일';
+        nextDay[i] = '월';
+        break;
+      case 2:
+        dayOfWeek = '화요일';
+        nextDay[i] = '화';
+        break;
+      case 3:
+        dayOfWeek = '수요일';
+        nextDay[i] = '수';
+        break;
+      case 4:
+        dayOfWeek = '목요일';
+        nextDay[i] = '목';
+        break;
+      case 5:
+        dayOfWeek = '금요일';
+        nextDay[i] = '금';
+        break;
+      case 6:
+        dayOfWeek = '토요일';
+        nextDay[i] = '토';
+        break;
+    }
   }
   let timeTable = [];
   for (let i = 0; i < 24; i++) {
     timeTable[i] = i + '시';
   }
-  return { day, nextDate, timeTable };
+  const today = {
+    currentDate: date,
+    currentTime: time,
+    currentDay: dayOfWeek,
+  };
+  const next = {
+    nextDate: nextDate,
+    nextDay: nextDay,
+  };
+  return { today, next, timeTable };
 }
 
 export async function getCompAndSeatById(trainNo, compId) {
@@ -81,31 +88,25 @@ export async function getCompAndSeatById(trainNo, compId) {
   });
 }
 
-const timestamps = new Date();
+export async function getTrainById(trainNo) {
+  const depPlaceTime = await Train.findByPk(trainNo, {
+    attributes: ['dep_pland_time'],
+  });
+  const arrPlaceTime = await Train.findByPk(trainNo, {
+    attributes: ['arr_pland_time'],
+  });
+  const minuteDiff = differenceInMinutes(
+    arrPlaceTime.dataValues.arr_pland_time,
+    depPlaceTime.dataValues.dep_pland_time
+  );
+  const data = {
+    hourDiff: parseInt(minuteDiff / 60),
+    minuteDiff: minuteDiff % 60,
+  };
+  return data;
+}
 
 export async function getTrains(depPlaceId, arrPlaceId, depPlandTime) {
-  // let trains = await Train.create({
-  //   train_grade_name: 'KTX',
-  //   dep_pland_time: timestamps,
-  //   arr_pland_time: timestamps,
-  //   dep_place_name: '서울',
-  //   arr_place_name: '부산',
-  // });
-  // trains = await Train.create({
-  //   train_grade_name: 'KTX',
-  //   dep_pland_time: timestamps,
-  //   arr_pland_time: timestamps,
-  //   dep_place_name: '서울',
-  //   arr_place_name: '부산',
-  // });
-  // trains = await Train.create({
-  //   train_grade_name: 'KTX',
-  //   dep_pland_time: timestamps,
-  //   arr_pland_time: timestamps,
-  //   dep_place_name: '서울',
-  //   arr_place_name: '부산',
-  // });
-
   const depPlaceName = (await getStationById(depPlaceId)).dataValues
     .station_name;
   const arrPlaceName = (await getStationById(arrPlaceId)).dataValues
