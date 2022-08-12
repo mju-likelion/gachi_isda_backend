@@ -20,7 +20,7 @@ sequelize
   });
 
 const corsOptions = {
-  origin: 'http://localhost:3000', //허락하고자 하는 요청주소여야 함!
+  origin: '*', //허락하고자 하는 요청주소여야 함!
   credentials: true,
 };
 
