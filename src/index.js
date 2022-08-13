@@ -4,9 +4,10 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+require('dotenv').config();
 
 const app = express();
-const port = 3300;
+const port = process.env.PORT;
 
 const { sequelize } = require('../models');
 sequelize
@@ -19,7 +20,7 @@ sequelize
   });
 
 const corsOptions = {
-  origin: 'http://localhost:3000', //허락하고자 하는 요청주소여야 함!
+  origin: '*', //허락하고자 하는 요청주소여야 함!
   credentials: true,
 };
 
@@ -27,6 +28,7 @@ app.use(morgan('tiny'));
 app.use(helmet());
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api', api);
 
