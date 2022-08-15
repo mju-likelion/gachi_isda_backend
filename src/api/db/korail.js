@@ -15,64 +15,21 @@ export async function getStationById(stationId) {
 
 export async function getDate() {
   const now = new Date();
-  const utcNow = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
-  const krTimeCalculate = 9 * 60 * 60 * 1000;
-  const kraNow = new Date(utcNow + krTimeCalculate);
-
-  let dayOfWeek = getDay(kraNow); //일요일 : 0, 토요일 : 6)
-  const date = format(kraNow, 'yyyy-MM-dd');
-  const time = format(kraNow, 'HH:mm');
-
-  let nextDate = [];
-  let nextDay = [];
+  const dates = [];
+  let nextDate = now;
   for (let i = 0; i < 31; i++) {
-    nextDate[i] = format(add(kraNow, { days: 1 + i }), 'MM-dd');
-    nextDay[i] = getDay(add(kraNow, { days: 1 + i }));
-    switch ((dayOfWeek, nextDay[i])) {
-      case 0:
-        dayOfWeek = '일요일';
-        nextDay[i] = '일';
-        break;
-      case 1:
-        dayOfWeek = '월요일';
-        nextDay[i] = '월';
-        break;
-      case 2:
-        dayOfWeek = '화요일';
-        nextDay[i] = '화';
-        break;
-      case 3:
-        dayOfWeek = '수요일';
-        nextDay[i] = '수';
-        break;
-      case 4:
-        dayOfWeek = '목요일';
-        nextDay[i] = '목';
-        break;
-      case 5:
-        dayOfWeek = '금요일';
-        nextDay[i] = '금';
-        break;
-      case 6:
-        dayOfWeek = '토요일';
-        nextDay[i] = '토';
-        break;
-    }
+    const date = format(nextDate, 'dd');
+    const day = getDate2(getDay(nextDate));
+    dates.push({ date, day });
+    nextDate = add(nextDate, { days: 1 });
   }
+
   let timeTable = [];
   for (let i = 0; i < 24; i++) {
-    timeTable[i] = i + '시';
+    timeTable[i] = i;
   }
-  const today = {
-    currentDate: date,
-    currentTime: time,
-    currentDay: dayOfWeek,
-  };
-  const next = {
-    nextDate: nextDate,
-    nextDay: nextDay,
-  };
-  return { today, next, timeTable };
+
+  return { dates, timeTable };
 }
 
 export async function getCompAndSeatById(trainNo, compId) {
@@ -144,4 +101,23 @@ export async function createTicket(trainNo, compId, seats) {
       },
     ],
   });
+}
+
+function getDate2(date) {
+  switch (date) {
+    case 0:
+      return '일';
+    case 1:
+      return '월';
+    case 2:
+      return '화';
+    case 3:
+      return '수';
+    case 4:
+      return '목';
+    case 5:
+      return '금';
+    case 6:
+      return '토';
+  }
 }
