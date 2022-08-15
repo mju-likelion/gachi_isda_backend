@@ -31,6 +31,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api', api);
+app.use(function (req, res, next) {
+  res.status(404).send('404 Not Found');
+});
 
 app.listen(port, () => {
   console.log(`서버실행 => http://localhost:${port}`);
