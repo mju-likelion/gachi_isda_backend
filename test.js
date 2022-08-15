@@ -32,3 +32,13 @@ function getDate2(date) {
   }
 }
 getDate();
+
+const y = 2022;
+const M = 08;
+const d = 15;
+const h = 15;
+const m = 21;
+const s = 00;
+const dt = new Date(+y, +M - 1, +d, +h + 9, +m, +s);
+console.log(dt);
+console.log(new Date('2022-08-15T15:21:00.000Z'));

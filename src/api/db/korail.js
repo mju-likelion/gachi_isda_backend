@@ -2,7 +2,18 @@ import sequelize from 'sequelize';
 import Station from '../../../models/station';
 import Train from '../../../models/train';
 import Seat from '../../../models/seat';
-import { add, differenceInMinutes, getDay, format } from 'date-fns';
+import {
+  add,
+  differenceInMinutes,
+  getDay,
+  format,
+  setDate,
+  set,
+  setHours,
+  endOfDay,
+  addHours,
+} from 'date-fns';
+import { Op } from 'sequelize';
 import Comp from '../../../models/comp';
 
 export async function getStations() {
@@ -68,11 +79,15 @@ export async function getTrains(depPlaceId, arrPlaceId, depPlandTime) {
     .station_name;
   const arrPlaceName = (await getStationById(arrPlaceId)).dataValues
     .station_name;
+  const start = new Date(depPlandTime);
+  const tomorrow = set(start, { hours: 9, minutes: 0 });
+  console.log(start);
+  console.log(tomorrow);
   return await Train.findAll({
     where: {
       dep_place_name: depPlaceName,
       arr_place_name: arrPlaceName,
-      //날짜
+      dep_pland_time: { [Op.and]: [{ [Op.gt]: start }, { [Op.lt]: tomorrow }] },
     },
   });
 }
@@ -95,7 +110,7 @@ export async function createTicket(trainNo, compId, seats) {
           {
             model: Seat,
             attributes: ['id', 'seat_name'],
-            where: { id: { [sequelize.Op.or]: seatIds } },
+            where: { id: { [Op.or]: seatIds } },
           },
         ],
       },
