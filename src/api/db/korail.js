@@ -7,11 +7,7 @@ import {
   differenceInMinutes,
   getDay,
   format,
-  setDate,
   set,
-  setHours,
-  endOfDay,
-  addHours,
   getYear,
   getMonth,
 } from 'date-fns';
@@ -28,8 +24,12 @@ export async function getStationById(stationId) {
 
 export async function getDate() {
   const now = new Date();
+  const utcNow = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const krTimeCalculate = 9 * 60 * 60 * 1000;
+  const kraNow = new Date(utcNow + krTimeCalculate);
   const dates = [];
-  let nextDate = now;
+  let nextDate = kraNow;
+  console.log(nextDate);
   for (let i = 0; i < 31; i++) {
     const year = getYear(nextDate);
     const month = 1 + getMonth(nextDate);
