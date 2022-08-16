@@ -12,6 +12,8 @@ import {
   setHours,
   endOfDay,
   addHours,
+  getYear,
+  getMonth,
 } from 'date-fns';
 import { Op } from 'sequelize';
 import Comp from '../../../models/comp';
@@ -29,9 +31,11 @@ export async function getDate() {
   const dates = [];
   let nextDate = now;
   for (let i = 0; i < 31; i++) {
+    const year = getYear(nextDate);
+    const month = 1 + getMonth(nextDate);
     const date = format(nextDate, 'dd');
     const day = getDate2(getDay(nextDate));
-    dates.push({ date, day });
+    dates.push({ year, month, date, day });
     nextDate = add(nextDate, { days: 1 });
   }
 
