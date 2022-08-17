@@ -20,7 +20,7 @@ sequelize
   });
 
 const corsOptions = {
-  origin: '*', //허락하고자 하는 요청주소여야 함!
+  origin: '*',
   credentials: true,
 };
 
