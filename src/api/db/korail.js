@@ -29,7 +29,6 @@ export async function getDate() {
   const kraNow = new Date(utcNow + krTimeCalculate);
   const dates = [];
   let nextDate = kraNow;
-  console.log(nextDate);
   for (let i = 0; i < 31; i++) {
     const year = getYear(nextDate);
     const month = 1 + getMonth(nextDate);
@@ -86,14 +85,15 @@ export async function getTrains(depPlaceId, arrPlaceId, depPlandTime) {
   }
   const depPlaceName = depStation.station_name;
   const arrPlaceName = arrStation.station_name;
+  console.log('depPlandTime', depPlandTime);
   const start = new Date(depPlandTime);
+  console.log('start', start);
   const tomorrowDate = add(start, { days: 1 });
   const tomorrow = set(tomorrowDate, {
     hours: 9,
     minutes: 0,
   });
-  console.log(start);
-  console.log(tomorrow);
+  console.log('tomorrow', tomorrow);
   return await Train.findAll({
     where: {
       dep_place_name: depPlaceName,
