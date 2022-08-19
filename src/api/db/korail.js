@@ -96,8 +96,8 @@ export async function getTrains(depPlaceId, arrPlaceId, depPlandTime) {
   console.log('tomorrow', tomorrow);
   return await Train.findAll({
     where: {
-      dep_place_name: depPlaceName,
-      arr_place_name: arrPlaceName,
+      dep_place_name: '서울',
+      arr_place_name: '김천구미',
       dep_pland_time: { [Op.and]: [{ [Op.gt]: start }, { [Op.lt]: tomorrow }] },
     },
   });
