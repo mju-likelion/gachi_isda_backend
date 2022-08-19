@@ -19,7 +19,7 @@ export async function getStations() {
 }
 
 export async function getStationById(stationId) {
-  return await Station.findByPk(stationId);
+  return await Station.findByPk(stationId, { raw: true });
 }
 
 export async function getDate() {
@@ -79,10 +79,13 @@ export async function getTrainById(trainNo) {
 }
 // 1 | KTX              | 2022-08-16 14:46:14 | 2022-08-16 15:46:14 | 서울           | 김천구미       |
 export async function getTrains(depPlaceId, arrPlaceId, depPlandTime) {
-  const depPlaceName = (await getStationById(depPlaceId)).dataValues
-    .station_name;
-  const arrPlaceName = (await getStationById(arrPlaceId)).dataValues
-    .station_name;
+  const depStation = await getStationById(depPlaceId);
+  const arrStation = await getStationById(arrPlaceId);
+  if (depStation == null || arrStation == null) {
+    return null;
+  }
+  const depPlaceName = depStation.station_name;
+  const arrPlaceName = arrStation.station_name;
   const start = new Date(depPlandTime);
   const tomorrowDate = add(start, { days: 1 });
   const tomorrow = set(tomorrowDate, {
