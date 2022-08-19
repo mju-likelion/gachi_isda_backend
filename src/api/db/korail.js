@@ -88,7 +88,11 @@ export async function getTrains(depPlaceId, arrPlaceId, depPlandTime) {
   console.log('depPlandTime', depPlandTime);
   const start = new Date(depPlandTime);
   console.log('start', start);
-  const tomorrow = add(start, { days: 1 });
+  const tomorrowDate = add(start, { days: 1 });
+  const tomorrow = set(tomorrowDate, {
+    hours: 0,
+    minutes: 0,
+  });
   console.log('tomorrow', tomorrow);
   return await Train.findAll({
     where: {
