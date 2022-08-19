@@ -1,7 +1,20 @@
-'use strict';
+const { default: axios } = require('axios');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const url = `https://plainkorean.kr/api.jsp?keyword`;
+
+    const { data } = await axios.get(url);
+
+    const words = data.map(({ keyword, alt, example }) => {
+      return {
+        loanword: keyword,
+        meaning: alt,
+        ex_loan: example[0],
+        ex_korean: example[1],
+      };
+    });
+
     await queryInterface.bulkInsert('DictionaryDatas', [
       {
         loanword: '세트',
@@ -49,6 +62,7 @@ module.exports = {
         ex_loan: '예시가 제공되지 않습니다.',
         ex_korean: '예시가 제공되지 않습니다.',
       },
+      ...words,
     ]);
   },
 

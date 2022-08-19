@@ -77,7 +77,7 @@ export async function getTrainById(trainNo) {
   };
   return data;
 }
-
+// 1 | KTX              | 2022-08-16 14:46:14 | 2022-08-16 15:46:14 | 서울           | 김천구미       |
 export async function getTrains(depPlaceId, arrPlaceId, depPlandTime) {
   const depPlaceName = (await getStationById(depPlaceId)).dataValues
     .station_name;
