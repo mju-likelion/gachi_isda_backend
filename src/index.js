@@ -20,7 +20,7 @@ sequelize
   });
 
 const corsOptions = {
-  origin: '*', //허락하고자 하는 요청주소여야 함!
+  origin: '*',
   credentials: true,
 };
 
@@ -30,6 +30,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.get('/', (req, res) => {
+  res.send('Hello');
+});
 app.use('/api', api);
 app.use(function (req, res, next) {
   res.status(404).send('404 Not Found');

@@ -7,11 +7,9 @@ import {
   differenceInMinutes,
   getDay,
   format,
-  setDate,
   set,
-  setHours,
-  endOfDay,
-  addHours,
+  getYear,
+  getMonth,
 } from 'date-fns';
 import { Op } from 'sequelize';
 import Comp from '../../../models/comp';
@@ -26,12 +24,18 @@ export async function getStationById(stationId) {
 
 export async function getDate() {
   const now = new Date();
+  const utcNow = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const krTimeCalculate = 9 * 60 * 60 * 1000;
+  const kraNow = new Date(utcNow + krTimeCalculate);
   const dates = [];
-  let nextDate = now;
+  let nextDate = kraNow;
+  console.log(nextDate);
   for (let i = 0; i < 31; i++) {
+    const year = getYear(nextDate);
+    const month = 1 + getMonth(nextDate);
     const date = format(nextDate, 'dd');
     const day = getDate2(getDay(nextDate));
-    dates.push({ date, day });
+    dates.push({ year, month, date, day });
     nextDate = add(nextDate, { days: 1 });
   }
 
@@ -80,7 +84,11 @@ export async function getTrains(depPlaceId, arrPlaceId, depPlandTime) {
   const arrPlaceName = (await getStationById(arrPlaceId)).dataValues
     .station_name;
   const start = new Date(depPlandTime);
-  const tomorrow = set(add(start, { days: 1 }), { hours: 0, minutes: 0 });
+  const tomorrowDate = add(start, { days: 1 });
+  const tomorrow = set(tomorrowDate, {
+    hours: 9,
+    minutes: 0,
+  });
   console.log(start);
   console.log(tomorrow);
   return await Train.findAll({
